@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>質因數分解產生器</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #74ebd5, #ACB6E5); }
+        .container { background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 10px; }
+        h1 { font-size: 1.5em; color: #333; }
+        input, button { padding: 10px; font-size: 1em; border: none; border-radius: 10px; }
+        input { width: 100px; }
+        button { background: #74ebd5; color: #fff; cursor: pointer; }
+        .result { font-size: 1.2em; color: #333; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>質因數分解</h1>
+        <input type="number" id="inputNumber" placeholder="整數" min="2">
+        <button onclick="factorize()">開始</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function factorize() {
+            let n = BigInt(document.getElementById('inputNumber').value), factors = [];
+            const resultDiv = document.getElementById('result');
+            if (n < 2n) return resultDiv.innerText = "請輸入大於 1 的數字";
+            while (n % 2n === 0n) factors.push(2), n /= 2n;
+            for (let i = 3n; i * i <= n; i += 2n) while (n % i === 0n) factors.push(Number(i)), n /= i;
+            if (n > 1n) factors.push(Number(n));
+            resultDiv.innerText = "質因數: " + factors.join(" × ");
+        }
+    </script>
+</body>
+</html>
